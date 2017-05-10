@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ualberta.edu.cs.ssrg.phy.dynamics:Dynamics xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ualberta.edu.cs.ssrg.phy.dynamics="http://ualberta.edu.cs.ssrg.phy.dynamics">
+  <appearActivities activityId="meteorites" actorId="asteroid" frequency="3.0" angularSpeed="3.0" linearSpeed="3.0" positionX="3" positionY="3"/>
+  <appearActivities activityId="emeraldBonus" actorId="emerald" frequency="3.0" angularSpeed="1.0" linearSpeed="3.0" positionX="3" positionY="3"/>
+  <environment gravity="0.8"/>
+</ualberta.edu.cs.ssrg.phy.dynamics:Dynamics>

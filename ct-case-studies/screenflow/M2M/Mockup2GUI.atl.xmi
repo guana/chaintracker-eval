@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="5:1-56:86" name="Mockup2GUI">
+    <commentsBefore>-- @path Mockup=/Mockup2GUI/metamodels/Mockup.ecore</commentsBefore>
+    <commentsBefore>-- @path GUI=/Mockup2GUI/metamodels/GUI.ecore</commentsBefore>
+    <commentsBefore>-- @atlcompiler emftvm</commentsBefore>
+    <inModels location="6:23-6:34" name="IN" metamodel="/2"/>
+    <outModels location="6:8-6:17" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="8:1-21:2" name="Model2Application">
+      <outPattern location="11:2-20:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:3-20:4" varName="application">
+          <type xsi:type="ocl:OclModelElement" location="12:17-12:32" name="Application" model="/1"/>
+          <bindings location="13:4-13:33" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="13:12-13:33" name="name">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="13:12-13:28" name="prototype">
+                <source xsi:type="ocl:VariableExp" location="13:12-13:18" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="14:4-14:39" propertyName="package">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="14:15-14:39" name="package">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="14:15-14:31" name="prototype">
+                <source xsi:type="ocl:VariableExp" location="14:15-14:21" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="15:4-15:86" propertyName="useCamera">
+            <value xsi:type="ocl:OperationCallExp" location="15:17-15:86" operationName="endsWith">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:17-15:69" name="camera">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:17-15:62" name="permissions">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:17-15:50" name="permisionSection">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="15:17-15:33" name="prototype">
+                      <source xsi:type="ocl:VariableExp" location="15:17-15:23" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="15:79-15:85" stringSymbol="true"/>
+            </value>
+          </bindings>
+          <bindings location="16:4-16:96" propertyName="useGeoLocation">
+            <value xsi:type="ocl:OperationCallExp" location="16:22-16:96" operationName="endsWith">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="16:22-16:79" name="geolocation">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="16:22-16:67" name="permissions">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="16:22-16:55" name="permisionSection">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="16:22-16:38" name="prototype">
+                      <source xsi:type="ocl:VariableExp" location="16:22-16:28" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="16:89-16:95" stringSymbol="true"/>
+            </value>
+          </bindings>
+          <bindings location="17:4-17:88" propertyName="useNetwork">
+            <value xsi:type="ocl:OperationCallExp" location="17:18-17:88" operationName="endsWith">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="17:18-17:71" name="network">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="17:18-17:63" name="permissions">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="17:18-17:51" name="permisionSection">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="17:18-17:34" name="prototype">
+                      <source xsi:type="ocl:VariableExp" location="17:18-17:24" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="17:81-17:87" stringSymbol="true"/>
+            </value>
+          </bindings>
+          <bindings location="18:4-18:88" propertyName="useStorage">
+            <value xsi:type="ocl:OperationCallExp" location="18:18-18:88" operationName="endsWith">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="18:18-18:71" name="storage">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="18:18-18:63" name="permissions">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="18:18-18:51" name="permisionSection">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="18:18-18:34" name="prototype">
+                      <source xsi:type="ocl:VariableExp" location="18:18-18:24" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="18:81-18:87" stringSymbol="true"/>
+            </value>
+          </bindings>
+          <bindings location="19:4-19:54" propertyName="screens">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="19:15-19:54" name="screens">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="19:15-19:46" name="screensSection">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="19:15-19:31" name="prototype">
+                  <source xsi:type="ocl:VariableExp" location="19:15-19:21" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="9:2-10:24">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:3-10:24" varName="mockup" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@source/@source/@source/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.3/@value/@source/@source/@source/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.4/@value/@source/@source/@source/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.5/@value/@source/@source/@source/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.6/@value/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:11-10:24" name="Mockup" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="23:1-32:2" name="MockupScreen2ApplicationScreen">
+      <outPattern location="26:2-31:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="27:3-31:4" varName="appscreen">
+          <type xsi:type="ocl:OclModelElement" location="27:14-27:24" name="Screen" model="/1"/>
+          <bindings location="28:4-28:27" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="28:12-28:27" name="name">
+              <source xsi:type="ocl:VariableExp" location="28:12-28:22" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="29:4-29:57" propertyName="isMain">
+            <value xsi:type="ocl:OperationCallExp" location="29:14-29:57" operationName="endsWith">
+              <source xsi:type="ocl:OperationCallExp" location="29:14-29:40" operationName="toString">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:14-29:29" name="main">
+                  <source xsi:type="ocl:VariableExp" location="29:14-29:24" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="29:50-29:56" stringSymbol="true"/>
+            </value>
+          </bindings>
+          <bindings location="30:4-30:45" propertyName="actions">
+            <value xsi:type="ocl:OperationCallExp" location="30:15-30:45" operationName="getAllTransitions">
+              <source xsi:type="ocl:VariableExp" location="30:15-30:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="24:2-25:28">
+        <elements xsi:type="atl:SimpleInPatternElement" location="25:3-25:28" varName="mockscreen" variableExp="/0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.2/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="25:15-25:28" name="Screen" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="34:1-43:2" name="Transition2Action">
+      <outPattern location="37:2-42:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="38:3-42:4" varName="action">
+          <type xsi:type="ocl:OclModelElement" location="38:12-38:22" name="Action" model="/1"/>
+          <bindings location="39:4-39:26" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="39:12-39:26" name="name">
+              <source xsi:type="ocl:VariableExp" location="39:12-39:21" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="40:4-40:37" propertyName="destination">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="40:19-40:37" name="toScreen">
+              <source xsi:type="ocl:VariableExp" location="40:19-40:28" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="41:4-41:31" propertyName="button">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="41:14-41:31" name="trigger">
+              <source xsi:type="ocl:VariableExp" location="41:14-41:23" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="35:2-36:32">
+        <elements xsi:type="atl:SimpleInPatternElement" location="36:3-36:32" varName="transiton" variableExp="/0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.1/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.2/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="36:15-36:32" name="Transition" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="45:1-53:2" name="Trigger2Button">
+      <outPattern location="48:2-52:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="49:3-52:4" varName="button">
+          <type xsi:type="ocl:OclModelElement" location="49:12-49:22" name="Button" model="/1"/>
+          <bindings location="50:4-50:24" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="50:12-50:24" name="name">
+              <source xsi:type="ocl:VariableExp" location="50:12-50:19" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="51:4-51:58" propertyName="isMenuItem">
+            <value xsi:type="ocl:OperationCallExp" location="51:18-51:58" operationName="endsWith">
+              <source xsi:type="ocl:OperationCallExp" location="51:18-51:41" operationName="toString">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="51:18-51:30" name="menu">
+                  <source xsi:type="ocl:VariableExp" location="51:18-51:25" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:StringExp" location="51:51-51:57" stringSymbol="true"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="46:2-47:27">
+        <elements xsi:type="atl:SimpleInPatternElement" location="47:3-47:27" varName="trigger" variableExp="/0/@elements.3/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="47:13-47:27" name="Trigger" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:Helper" location="55:1-56:86">
+      <definition location="55:8-56:85">
+        <feature xsi:type="ocl:Operation" location="55:35-56:85" name="getAllTransitions">
+          <returnType xsi:type="ocl:SetType" location="55:57-55:79">
+            <elementType xsi:type="ocl:OclModelElement" location="55:61-55:78" name="Transition" model="/2"/>
+          </returnType>
+          <body xsi:type="ocl:IteratorExp" location="56:2-56:85" name="select">
+            <source xsi:type="ocl:OperationCallExp" location="56:2-56:34" operationName="allInstances">
+              <source xsi:type="ocl:OclModelElement" location="56:2-56:19" name="Transition" model="/2"/>
+            </source>
+            <body xsi:type="ocl:OperationCallExp" location="56:47-56:84" operationName="endsWith">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="56:47-56:64" name="name">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="56:47-56:59" name="fromScreen">
+                  <source xsi:type="ocl:VariableExp" location="56:47-56:48" referredVariable="/0/@elements.4/@definition/@feature/@body/@iterators.0"/>
+                </source>
+              </source>
+              <arguments xsi:type="ocl:NavigationOrAttributeCallExp" location="56:74-56:83" name="name">
+                <source xsi:type="ocl:VariableExp" location="56:74-56:78" referredVariable="/3"/>
+              </arguments>
+            </body>
+            <iterators location="56:43-56:44" varName="i" variableExp="/0/@elements.4/@definition/@feature/@body/@body/@source/@source/@source"/>
+          </body>
+        </feature>
+        <context_ location="55:8-55:29">
+          <context_ xsi:type="ocl:OclModelElement" location="55:16-55:29" name="Screen" model="/2"/>
+        </context_>
+      </definition>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="6:14-6:17" name="GUI" elements="/0/@elements.0/@outPattern/@elements.0/@type /0/@elements.1/@outPattern/@elements.0/@type /0/@elements.2/@outPattern/@elements.0/@type /0/@elements.3/@outPattern/@elements.0/@type" model="/0/@outModels.0"/>
+  <ocl:OclModel location="6:28-6:34" name="Mockup" elements="/0/@elements.0/@inPattern/@elements.0/@type /0/@elements.1/@inPattern/@elements.0/@type /0/@elements.2/@inPattern/@elements.0/@type /0/@elements.3/@inPattern/@elements.0/@type /0/@elements.4/@definition/@context_/@context_ /0/@elements.4/@definition/@feature/@returnType/@elementType /0/@elements.4/@definition/@feature/@body/@source/@source" model="/0/@inModels.0"/>
+  <ocl:VariableDeclaration location="56:74-56:78" varName="self" variableExp="/0/@elements.4/@definition/@feature/@body/@body/@arguments.0/@source"/>
+</xmi:XMI>

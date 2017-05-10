@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ASCII"?>
+<phydsl:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:phydsl="http://www.edu.ualberta/cs/ssrg/phy/Phydsl">
+  <resources>
+    <dataTypes xsi:type="phydsl:BooleanType" name="yes" value="1"/>
+    <dataTypes xsi:type="phydsl:BooleanType" name="no"/>
+    <dataTypes xsi:type="phydsl:DataType" name="UP" value="UP"/>
+    <dataTypes xsi:type="phydsl:DataType" name="RIGHT" value="RIGHT"/>
+    <dataTypes xsi:type="phydsl:DataType" name="LEFT" value="LEFT"/>
+    <dataTypes xsi:type="phydsl:DataType" name="alienImage" value="c://phydsl/images/alien.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="brickImage" value="c://phydsl/images/brick.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="emeraldImage" value="c://phydsl/images/emerald.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="rubyImage" value="c://phydsl/images/emerald.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="asteroidImage" value="c://phydsl/images/asteroid.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="caveImage" value="c://phydsl/images/cave.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="singleScene" value="SINGLE-SCENE"/>
+    <dataTypes xsi:type="phydsl:DataType" name="aButton" value="c://phydsl/images/ablue.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="rightButton" value="c://phydsl/images/ight.png"/>
+    <dataTypes xsi:type="phydsl:DataType" name="leftButton" value="c://phydsl/images/left.png"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="none"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="sandpaper" value="2.0"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="baseball" value="1.0"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="beachball" value="1.0"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="moonGravity" value="0.8"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="high" value="3.0"/>
+    <dataTypes xsi:type="phydsl:NumericType" name="slow" value="1.0"/>
+  </resources>
+  <game name="asteroids">
+    <mobileActorSection>
+      <actors name="asteroid">
+        <actorDefinition imageFile="//@resources.0/@dataTypes.9">
+          <density density="//@resources.0/@dataTypes.17"/>
+          <elasticity elasticity="//@resources.0/@dataTypes.18"/>
+          <friction friction="//@resources.0/@dataTypes.15"/>
+          <isBall boolean="//@resources.0/@dataTypes.0"/>
+        </actorDefinition>
+      </actors>
+      <actors name="emerald">
+        <actorDefinition imageFile="//@resources.0/@dataTypes.7">
+          <density density="//@resources.0/@dataTypes.17"/>
+          <elasticity elasticity="//@resources.0/@dataTypes.18"/>
+          <friction friction="//@resources.0/@dataTypes.15"/>
+          <isBall boolean="//@resources.0/@dataTypes.1"/>
+        </actorDefinition>
+      </actors>
+      <actors name="alien">
+        <actorDefinition imageFile="//@resources.0/@dataTypes.5">
+          <density density="//@resources.0/@dataTypes.17"/>
+          <elasticity elasticity="//@resources.0/@dataTypes.18"/>
+          <friction friction="//@resources.0/@dataTypes.15"/>
+          <isBall boolean="//@resources.0/@dataTypes.0"/>
+        </actorDefinition>
+      </actors>
+    </mobileActorSection>
+    <staticActorSection>
+      <actors name="wall">
+        <actorDefinition imageFile="//@resources.0/@dataTypes.6">
+          <density density="//@resources.0/@dataTypes.17"/>
+          <elasticity elasticity="//@resources.0/@dataTypes.17"/>
+          <friction friction="//@resources.0/@dataTypes.15"/>
+          <isBall boolean="//@resources.0/@dataTypes.1"/>
+        </actorDefinition>
+      </actors>
+      <actors name="ruby">
+        <actorDefinition imageFile="//@resources.0/@dataTypes.8">
+          <density density="//@resources.0/@dataTypes.17"/>
+          <elasticity elasticity="//@resources.0/@dataTypes.17"/>
+          <friction friction="//@resources.0/@dataTypes.15"/>
+          <isBall boolean="//@resources.0/@dataTypes.1"/>
+        </actorDefinition>
+      </actors>
+    </staticActorSection>
+    <layoutSection>
+      <grid>
+        <cordinate x="10" y="6"/>
+      </grid>
+      <locations element="//@game.0/@staticActorSection.0/@actors.0">
+        <cordinate y="1"/>
+      </locations>
+      <locations element="//@game.0/@staticActorSection.0/@actors.0">
+        <cordinate y="2"/>
+      </locations>
+      <locations element="//@game.0/@staticActorSection.0/@actors.0">
+        <cordinate y="3"/>
+      </locations>
+      <locations element="//@game.0/@staticActorSection.0/@actors.1">
+        <cordinate x="2" y="2"/>
+      </locations>
+      <locations element="//@game.0/@mobileActorSection.0/@actors.2">
+        <cordinate x="5" y="5"/>
+      </locations>
+    </layoutSection>
+    <evironmentSection>
+      <environment backgroudFile="//@resources.0/@dataTypes.10" mainActorID="//@game.0/@mobileActorSection.0/@actors.2">
+        <gravity gravity="//@resources.0/@dataTypes.19"/>
+        <camera camera="//@resources.0/@dataTypes.11"/>
+        <touchscreen boolean="//@resources.0/@dataTypes.0"/>
+      </environment>
+    </evironmentSection>
+    <activitySection>
+      <activities activityID="meteorites">
+        <activityDefinition linkedElement="//@game.0/@mobileActorSection.0/@actors.0">
+          <frequency frequency="//@resources.0/@dataTypes.20"/>
+          <angularSpeed angularSpeed="//@resources.0/@dataTypes.20"/>
+          <linearSpeed linearSpeed="//@resources.0/@dataTypes.20"/>
+          <cordinate x="3" y="3"/>
+        </activityDefinition>
+      </activities>
+      <activities activityID="emeraldBonus">
+        <activityDefinition linkedElement="//@game.0/@mobileActorSection.0/@actors.1">
+          <frequency frequency="//@resources.0/@dataTypes.20"/>
+          <angularSpeed angularSpeed="//@resources.0/@dataTypes.21"/>
+          <linearSpeed linearSpeed="//@resources.0/@dataTypes.20"/>
+          <cordinate x="3" y="3"/>
+        </activityDefinition>
+      </activities>
+    </activitySection>
+    <socoringSection>
+      <scoreRules xsi:type="phydsl:CollisionRule" name="emeraldPoints" elementA="//@game.0/@mobileActorSection.0/@actors.2" elementB="//@game.0/@mobileActorSection.0/@actors.1">
+        <effect dissapears="//@game.0/@mobileActorSection.0/@actors.1">
+          <points value="100"/>
+          <end boolean="//@resources.0/@dataTypes.1"/>
+        </effect>
+      </scoreRules>
+      <scoreRules xsi:type="phydsl:CollisionRule" name="asteroidDamage" elementA="//@game.0/@mobileActorSection.0/@actors.2" elementB="//@game.0/@mobileActorSection.0/@actors.0">
+        <effect>
+          <points value="-100"/>
+          <end boolean="//@resources.0/@dataTypes.0"/>
+          <loses boolean="//@resources.0/@dataTypes.0"/>
+        </effect>
+      </scoreRules>
+      <scoreRules xsi:type="phydsl:TouchRule" name="testTouch" elementTouched="//@game.0/@staticActorSection.0/@actors.1">
+        <effect>
+          <points value="50"/>
+          <end boolean="//@resources.0/@dataTypes.1"/>
+          <loses boolean="//@resources.0/@dataTypes.1"/>
+        </effect>
+      </scoreRules>
+    </socoringSection>
+    <controlSection>
+      <controls name="left" image="//@resources.0/@dataTypes.14">
+        <direction direction="//@resources.0/@dataTypes.4"/>
+        <cordinate y="4"/>
+      </controls>
+      <controls name="right" image="//@resources.0/@dataTypes.13">
+        <direction direction="//@resources.0/@dataTypes.3"/>
+        <cordinate y="5"/>
+      </controls>
+    </controlSection>
+  </game>
+</phydsl:Model>

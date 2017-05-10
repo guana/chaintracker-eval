@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ualberta.edu.cs.ssrg.phy.scoring:ScoreRules xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ualberta.edu.cs.ssrg.phy.scoring="http://ualberta.edu.cs.ssrg.phy.scoring">
+  <collisions collisionId="emeraldPoints" actorAId="alien" actorBId="emerald">
+    <collisionAction points="100" removeActorId="emerald"/>
+  </collisions>
+  <collisions collisionId="asteroidDamage" actorAId="alien" actorBId="asteroid">
+    <collisionAction points="-100" gameEnds="true" userLoses="true" removeActorId=""/>
+  </collisions>
+  <touches touchId="testTouch" actorId="ruby">
+    <touchAction points="50" removeActorId=""/>
+  </touches>
+</ualberta.edu.cs.ssrg.phy.scoring:ScoreRules>

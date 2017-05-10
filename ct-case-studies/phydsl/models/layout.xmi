@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ualberta.edu.cs.ssrg.phy.layout:Layout xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ualberta.edu.cs.ssrg.phy.layout="http://ualberta.edu.cs.ssrg.phy.layout" mainActorId="alien" isDragEnabled="true">
+  <cells positionX="0" actor="//@actors.3" positionY="1"/>
+  <cells positionX="0" actor="//@actors.3" positionY="2"/>
+  <cells positionX="0" actor="//@actors.3" positionY="3"/>
+  <cells positionX="2" actor="//@actors.4" positionY="2"/>
+  <cells positionX="5" actor="//@actors.2" positionY="5"/>
+  <actors actorId="asteroid" density="1.0" elasticity="1.0" friction="0.0" isBall="true" image="c://phydsl/images/asteroid.png"/>
+  <actors actorId="emerald" density="1.0" elasticity="1.0" friction="0.0" image="c://phydsl/images/emerald.png"/>
+  <actors actorId="alien" density="1.0" elasticity="1.0" friction="0.0" cell="//@cells.4" isBall="true" image="c://phydsl/images/alien.png"/>
+  <actors actorId="wall" density="1.0" elasticity="1.0" friction="0.0" cell="//@cells.0 //@cells.1 //@cells.2" image="c://phydsl/images/brick.png"/>
+  <actors actorId="ruby" density="1.0" elasticity="1.0" friction="0.0" cell="//@cells.3" image="c://phydsl/images/emerald.png"/>
+  <background cameraType="SINGLE-SCENE">
+    <backgroundSlices image="c://phydsl/images/cave.png"/>
+  </background>
+</ualberta.edu.cs.ssrg.phy.layout:Layout>

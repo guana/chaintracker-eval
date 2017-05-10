@@ -1,0 +1,45 @@
+-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore
+-- @path Dynamics=/examples/PhyDSLUpdated/metamodels/Dynamics.ecore
+
+module Game2Dynamics;
+create OUT : Dynamics from IN : Phydsl;
+
+-- Entrypoint to Phydsl to Dynamics
+rule main {
+	from
+		model : Phydsl!Model
+	to 
+		dynamics : Dynamics!Dynamics (
+			appearActivities <- model.game.first().activitySection.first().activities,
+			environment <- model.game.first().evironmentSection.first().environment.first()
+		)
+}
+
+-- Transfroms a generic activity into an appear activity, the ocl condition is 'activity definition has a valid coordinate'
+rule GameActivity2DynamicActivityAppear{
+	from
+		activity : Phydsl!Activity(
+			not activity.activityDefinition.first().cordinate.oclIsUndefined()
+		)
+		
+	to 
+		appearActivity : Dynamics!AppearActivity(
+			activityId <- activity.activityID,
+			actorId <- activity.activityDefinition.first().linkedElement.name,
+			frequency <- activity.activityDefinition.first().frequency.frequency.value.toString(),
+			angularSpeed <- activity.activityDefinition.first().angularSpeed.angularSpeed.value.toString(),
+			linearSpeed <- activity.activityDefinition.first().linearSpeed.linearSpeed.value.toString(),
+			positionX <- activity.activityDefinition.first().cordinate.x.toString(),
+			positionY <- activity.activityDefinition.first().cordinate.y.toString()
+		)
+}
+
+-- Transforms the definition of a game's environment into a dynamic environment, almost one to one mapping
+rule GameEnvironments2DynamicsEnvironment {
+	from
+		envg : Phydsl!Environment
+	to 
+		envd : Dynamics!Environment (
+			gravity <- envg.gravity.first().gravity.value.toString()
+		)
+}

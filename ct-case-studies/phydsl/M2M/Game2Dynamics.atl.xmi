@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="4:1-45:2" name="Game2Dynamics">
+    <commentsBefore>-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore</commentsBefore>
+    <commentsBefore>-- @path Dynamics=/examples/PhyDSLUpdated/metamodels/Dynamics.ecore</commentsBefore>
+    <inModels location="5:28-5:39" name="IN" metamodel="/2"/>
+    <outModels location="5:8-5:22" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="8:1-16:2" name="main">
+      <commentsBefore>-- Entrypoint to Phydsl to Dynamics</commentsBefore>
+      <commentsAfter>-- Transfroms a generic activity into an appear activity, the ocl condition is 'activity definition has a valid coordinate'</commentsAfter>
+      <outPattern location="11:2-15:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:3-15:4" varName="dynamics">
+          <type xsi:type="ocl:OclModelElement" location="12:14-12:31" name="Dynamics" model="/4"/>
+          <bindings location="13:4-13:77" propertyName="appearActivities">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="13:24-13:77" name="activities">
+              <source xsi:type="ocl:OperationCallExp" location="13:24-13:66" operationName="first">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="13:24-13:58" name="activitySection">
+                  <source xsi:type="ocl:OperationCallExp" location="13:24-13:42" operationName="first">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="13:24-13:34" name="game">
+                      <source xsi:type="ocl:VariableExp" location="13:24-13:29" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="14:4-14:83" propertyName="environment">
+            <value xsi:type="ocl:OperationCallExp" location="14:19-14:83" operationName="first">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="14:19-14:75" name="environment">
+                <source xsi:type="ocl:OperationCallExp" location="14:19-14:63" operationName="first">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="14:19-14:55" name="evironmentSection">
+                    <source xsi:type="ocl:OperationCallExp" location="14:19-14:37" operationName="first">
+                      <source xsi:type="ocl:NavigationOrAttributeCallExp" location="14:19-14:29" name="game">
+                        <source xsi:type="ocl:VariableExp" location="14:19-14:24" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                      </source>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="9:2-10:23">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:3-10:23" varName="model" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source/@source/@source/@source/@source /0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:11-10:23" name="Model" model="/3"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="19:1-35:2" name="GameActivity2DynamicActivityAppear">
+      <commentsBefore>-- Transfroms a generic activity into an appear activity, the ocl condition is 'activity definition has a valid coordinate'</commentsBefore>
+      <commentsAfter>-- Transforms the definition of a game's environment into a dynamic environment, almost one to one mapping</commentsAfter>
+      <outPattern location="25:2-34:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="26:3-34:4" varName="appearActivity">
+          <type xsi:type="ocl:OclModelElement" location="26:20-26:43" name="AppearActivity" model="/6"/>
+          <bindings location="27:4-27:37" propertyName="activityId">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="27:18-27:37" name="activityID">
+              <source xsi:type="ocl:VariableExp" location="27:18-27:26" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="28:4-28:69" propertyName="actorId">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="28:15-28:69" name="name">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="28:15-28:64" name="linkedElement">
+                <source xsi:type="ocl:OperationCallExp" location="28:15-28:50" operationName="first">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="28:15-28:42" name="activityDefinition">
+                    <source xsi:type="ocl:VariableExp" location="28:15-28:23" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="29:4-29:89" propertyName="frequency">
+            <value xsi:type="ocl:OperationCallExp" location="29:17-29:89" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:17-29:78" name="value">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:17-29:72" name="frequency">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:17-29:62" name="frequency">
+                    <source xsi:type="ocl:OperationCallExp" location="29:17-29:52" operationName="first">
+                      <source xsi:type="ocl:NavigationOrAttributeCallExp" location="29:17-29:44" name="activityDefinition">
+                        <source xsi:type="ocl:VariableExp" location="29:17-29:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                      </source>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="30:4-30:98" propertyName="angularSpeed">
+            <value xsi:type="ocl:OperationCallExp" location="30:20-30:98" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="30:20-30:87" name="value">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="30:20-30:81" name="angularSpeed">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="30:20-30:68" name="angularSpeed">
+                    <source xsi:type="ocl:OperationCallExp" location="30:20-30:55" operationName="first">
+                      <source xsi:type="ocl:NavigationOrAttributeCallExp" location="30:20-30:47" name="activityDefinition">
+                        <source xsi:type="ocl:VariableExp" location="30:20-30:28" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                      </source>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="31:4-31:95" propertyName="linearSpeed">
+            <value xsi:type="ocl:OperationCallExp" location="31:19-31:95" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="31:19-31:84" name="value">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="31:19-31:78" name="linearSpeed">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="31:19-31:66" name="linearSpeed">
+                    <source xsi:type="ocl:OperationCallExp" location="31:19-31:54" operationName="first">
+                      <source xsi:type="ocl:NavigationOrAttributeCallExp" location="31:19-31:46" name="activityDefinition">
+                        <source xsi:type="ocl:VariableExp" location="31:19-31:27" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                      </source>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="32:4-32:75" propertyName="positionX">
+            <value xsi:type="ocl:OperationCallExp" location="32:17-32:75" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="32:17-32:64" name="x">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="32:17-32:62" name="cordinate">
+                  <source xsi:type="ocl:OperationCallExp" location="32:17-32:52" operationName="first">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="32:17-32:44" name="activityDefinition">
+                      <source xsi:type="ocl:VariableExp" location="32:17-32:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="33:4-33:75" propertyName="positionY">
+            <value xsi:type="ocl:OperationCallExp" location="33:17-33:75" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="33:17-33:64" name="y">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="33:17-33:62" name="cordinate">
+                  <source xsi:type="ocl:OperationCallExp" location="33:17-33:52" operationName="first">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="33:17-33:44" name="activityDefinition">
+                      <source xsi:type="ocl:VariableExp" location="33:17-33:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="20:2-23:4">
+        <elements xsi:type="atl:SimpleInPatternElement" location="21:3-21:29" varName="activity" variableExp="/0/@elements.1/@inPattern/@filter/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.2/@value/@source/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.3/@value/@source/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.4/@value/@source/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.5/@value/@source/@source/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.6/@value/@source/@source/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="21:14-21:29" name="Activity" model="/5"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="22:4-22:70" operationName="not">
+          <source xsi:type="ocl:OperationCallExp" location="22:8-22:70" operationName="oclIsUndefined">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="22:8-22:53" name="cordinate">
+              <source xsi:type="ocl:OperationCallExp" location="22:8-22:43" operationName="first">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="22:8-22:35" name="activityDefinition">
+                  <source xsi:type="ocl:VariableExp" location="22:8-22:16" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </source>
+          </source>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="38:1-45:2" name="GameEnvironments2DynamicsEnvironment">
+      <commentsBefore>-- Transforms the definition of a game's environment into a dynamic environment, almost one to one mapping</commentsBefore>
+      <outPattern location="41:2-44:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="42:3-44:4" varName="envd">
+          <type xsi:type="ocl:OclModelElement" location="42:10-42:30" name="Environment" model="/8"/>
+          <bindings location="43:4-43:60" propertyName="gravity">
+            <value xsi:type="ocl:OperationCallExp" location="43:15-43:60" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="43:15-43:49" name="value">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="43:15-43:43" name="gravity">
+                  <source xsi:type="ocl:OperationCallExp" location="43:15-43:35" operationName="first">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="43:15-43:27" name="gravity">
+                      <source xsi:type="ocl:VariableExp" location="43:15-43:19" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="39:2-40:28">
+        <elements xsi:type="atl:SimpleInPatternElement" location="40:3-40:28" varName="envg" variableExp="/0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source/@source/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="40:10-40:28" name="Environment" model="/7"/>
+        </elements>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="5:14-5:22" name="Dynamics" model="/0/@outModels.0"/>
+  <ocl:OclModel location="5:33-5:39" name="Phydsl" model="/0/@inModels.0"/>
+  <ocl:OclModel location="10:11-10:17" name="Phydsl" elements="/0/@elements.0/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="12:14-12:22" name="Dynamics" elements="/0/@elements.0/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="21:14-21:20" name="Phydsl" elements="/0/@elements.1/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="26:20-26:28" name="Dynamics" elements="/0/@elements.1/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="40:10-40:16" name="Phydsl" elements="/0/@elements.2/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="42:10-42:18" name="Dynamics" elements="/0/@elements.2/@outPattern/@elements.0/@type"/>
+</xmi:XMI>

@@ -1,0 +1,73 @@
+-- @path Layout=/examples/PhyDSLUpdated/metamodels/Layout.ecore
+-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore
+
+-- Model Transformation Chain, transforms the game definition to a specific layout model
+module Game2Layout;
+create OUT : Layout from IN : Phydsl;
+
+-- Entrypoint Phydsl to Layout
+rule main {
+	from
+		model : Phydsl!Model
+	to 
+		layout : Layout!Layout (
+			actors <- Phydsl!Actor.allInstances()->asSequence(),
+			cells <- model.game.first().layoutSection.first().locations.asSequence(),
+			mainActorId <- if not model.game.first().evironmentSection.first().environment.first().mainActorID.oclIsUndefined()
+							then model.game.first().evironmentSection.first().environment.first().mainActorID.name
+							else ''
+							endif,
+			isDragEnabled <- model.game.first().evironmentSection.first().environment.first().touchscreen.boolean.solveBool()
+		)
+}
+
+-- Transformation: Phydsl Actors to Layout Actors flat definition
+rule ActorGame2ActorLayout {
+	from
+		r : Phydsl!Actor
+	to 
+		rl : Layout!Actor (
+			actorId <-  r.name,
+			isDynamic <- false,
+			density <- r.actorDefinition.first().density.density.value.toString(), 
+			elasticity <- r.actorDefinition.first().elasticity.elasticity.value.toString(),
+			friction <- r.actorDefinition.first().friction.friction.value.toString(),
+			isBall <- r.actorDefinition.first().isBall.boolean.solveBool(),
+			radius <- 1,
+			image <- r.actorDefinition.first().imageFile.value.toString()
+			
+			)
+}
+
+-- Transformation: Phydsl Location to Layout Cell, filters by type of Actor
+rule locationActor2Cell {
+	from
+		loc : Phydsl!Location(
+			loc.element.oclIsKindOf(Phydsl!Actor)
+		)	
+	to 
+		cell : Layout!Cell (
+			actor <- loc.element,
+			positionX <- loc.cordinate.x.toString(),
+			positionY <- loc.cordinate.y.toString()
+		)
+}
+
+-- Transformation: Phydsl Environment to a Layout Background
+rule backgroundFile2Background {
+	from
+		env : Phydsl!Environment
+	to 
+		background : Layout!Background (
+			cameraType <- env.camera.camera.value
+		),
+		backgroundSlice: Layout!BackgroundSlice (
+			image <- env.backgroudFile.value
+		)
+}
+
+helper context Phydsl!BooleanType  def: solveBool(): Boolean = 
+	if self.value = 1
+	then true
+	else false
+	endif;

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="4:1-96:8" name="Game2Scoring">
+    <commentsBefore>-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore</commentsBefore>
+    <commentsBefore>-- @path Scoring=/examples/PhyDSLUpdated/metamodels/Scoring.ecore</commentsBefore>
+    <inModels location="5:27-5:38" name="IN" metamodel="/2"/>
+    <outModels location="5:8-5:21" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="8:1-17:2" name="main">
+      <commentsBefore>-- Entrypoint to Phydsl to Scoring</commentsBefore>
+      <commentsAfter>-- Transforms a generic Score Rule into a Collision rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsAfter>
+      <outPattern location="11:2-16:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:3-16:4" varName="scoreRules">
+          <type xsi:type="ocl:OclModelElement" location="12:16-12:34" name="ScoreRules" model="/4"/>
+          <bindings location="13:4-13:98" propertyName="collisions">
+            <value xsi:type="ocl:IteratorExp" location="13:18-13:98" name="select">
+              <source xsi:type="ocl:OperationCallExp" location="13:18-13:49" operationName="allInstances">
+                <source xsi:type="ocl:OclModelElement" location="13:18-13:34" name="ScoreRule" model="/5"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="13:62-13:97" operationName="oclIsKindOf">
+                <source xsi:type="ocl:VariableExp" location="13:62-13:63" referredVariable="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:OclModelElement" location="13:76-13:96" name="CollisionRule" model="/6"/>
+              </body>
+              <iterators location="13:58-13:59" varName="e" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@body/@source"/>
+            </value>
+          </bindings>
+          <bindings location="14:4-14:88" propertyName="timed">
+            <value xsi:type="ocl:IteratorExp" location="14:13-14:88" name="select">
+              <source xsi:type="ocl:OperationCallExp" location="14:13-14:44" operationName="allInstances">
+                <source xsi:type="ocl:OclModelElement" location="14:13-14:29" name="ScoreRule" model="/7"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="14:57-14:87" operationName="oclIsKindOf">
+                <source xsi:type="ocl:VariableExp" location="14:57-14:58" referredVariable="/0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:OclModelElement" location="14:71-14:86" name="TimeRule" model="/8"/>
+              </body>
+              <iterators location="14:53-14:54" varName="e" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@body/@source"/>
+            </value>
+          </bindings>
+          <bindings location="15:4-15:91" propertyName="touches">
+            <value xsi:type="ocl:IteratorExp" location="15:15-15:91" name="select">
+              <source xsi:type="ocl:OperationCallExp" location="15:15-15:46" operationName="allInstances">
+                <source xsi:type="ocl:OclModelElement" location="15:15-15:31" name="ScoreRule" model="/9"/>
+              </source>
+              <body xsi:type="ocl:OperationCallExp" location="15:59-15:90" operationName="oclIsKindOf">
+                <source xsi:type="ocl:VariableExp" location="15:59-15:60" referredVariable="/0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@iterators.0"/>
+                <arguments xsi:type="ocl:OclModelElement" location="15:73-15:89" name="TouchRule" model="/10"/>
+              </body>
+              <iterators location="15:55-15:56" varName="e" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@body/@source"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="9:2-10:23">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:3-10:23" varName="model">
+          <type xsi:type="ocl:OclModelElement" location="10:11-10:23" name="Model" model="/3"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="20:1-34:2" name="ScoreRule2CollisionRule">
+      <commentsBefore>-- Transforms a generic Score Rule into a Collision rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsBefore>
+      <commentsAfter>-- Transforms a generic Score Rule into a Timed Rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsAfter>
+      <outPattern location="25:2-33:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="26:3-33:4" varName="collisionRule">
+          <type xsi:type="ocl:OclModelElement" location="26:19-26:40" name="CollisionRule" model="/13"/>
+          <bindings location="27:4-27:33" propertyName="collisionId">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="27:19-27:33" name="name">
+              <source xsi:type="ocl:VariableExp" location="27:19-27:28" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="28:4-28:43" propertyName="actorAId">
+            <value xsi:type="ocl:OperationCallExp" location="28:16-28:43" operationName="getCollisionAID">
+              <source xsi:type="ocl:VariableExp" location="28:16-28:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="29:4-29:43" propertyName="actorBId">
+            <value xsi:type="ocl:OperationCallExp" location="29:16-29:43" operationName="getCollisionBID">
+              <source xsi:type="ocl:VariableExp" location="29:16-29:25" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="30:4-30:39" propertyName="collisionAction">
+            <commentsAfter>-- called rule Effe2Action</commentsAfter>
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="30:23-30:39" name="effect">
+              <commentsAfter>-- called rule Effe2Action</commentsAfter>
+              <source xsi:type="ocl:VariableExp" location="30:23-30:32" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="21:2-24:4">
+        <elements xsi:type="atl:SimpleInPatternElement" location="22:3-22:31" varName="scoreRule" variableExp="/0/@elements.1/@inPattern/@filter/@source /0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.2/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.3/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="22:15-22:31" name="ScoreRule" model="/11"/>
+        </elements>
+        <filter xsi:type="ocl:OperationCallExp" location="23:4-23:47" operationName="oclIsKindOf">
+          <commentsAfter>-- filters only score rules of type </commentsAfter>
+          <source xsi:type="ocl:VariableExp" location="23:4-23:13" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+          <arguments xsi:type="ocl:OclModelElement" location="23:26-23:46" name="CollisionRule" model="/12"/>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="37:1-48:2" name="ScoreRule2TimedRule">
+      <commentsBefore>-- Transforms a generic Score Rule into a Timed Rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsBefore>
+      <commentsAfter>-- Transforms a generic Score Rule into a Touch Rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsAfter>
+      <outPattern location="42:2-47:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="43:3-47:4" varName="timedRule">
+          <type xsi:type="ocl:OclModelElement" location="43:15-43:32" name="TimedRule" model="/16"/>
+          <bindings location="44:4-44:29" propertyName="timedId">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="44:15-44:29" name="name">
+              <source xsi:type="ocl:VariableExp" location="44:15-44:24" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="45:4-45:31" propertyName="time">
+            <value xsi:type="ocl:OperationCallExp" location="45:12-45:31" operationName="getTime">
+              <source xsi:type="ocl:VariableExp" location="45:12-45:21" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="46:4-46:35" propertyName="timedAction">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="46:19-46:35" name="effect">
+              <source xsi:type="ocl:VariableExp" location="46:19-46:28" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="38:2-41:4">
+        <elements xsi:type="atl:SimpleInPatternElement" location="39:3-39:31" varName="scoreRule" variableExp="/0/@elements.2/@inPattern/@filter/@source /0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.1/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.2/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="39:15-39:31" name="ScoreRule" model="/14"/>
+        </elements>
+        <filter xsi:type="ocl:OperationCallExp" location="40:4-40:42" operationName="oclIsKindOf">
+          <source xsi:type="ocl:VariableExp" location="40:4-40:13" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+          <arguments xsi:type="ocl:OclModelElement" location="40:26-40:41" name="TimeRule" model="/15"/>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="51:1-62:2" name="ScoreRule2TouchRule">
+      <commentsBefore>-- Transforms a generic Score Rule into a Touch Rule using helpers to deal with the polymorphism of subfeatures due grammar</commentsBefore>
+      <commentsAfter>-- Transforms a Phydsl ScoreEffect to a Scoring Action</commentsAfter>
+      <outPattern location="56:2-61:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="57:3-61:4" varName="touchRule">
+          <type xsi:type="ocl:OclModelElement" location="57:15-57:32" name="TouchRule" model="/19"/>
+          <bindings location="58:4-58:29" propertyName="touchId">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="58:15-58:29" name="name">
+              <source xsi:type="ocl:VariableExp" location="58:15-58:24" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="59:4-59:42" propertyName="actorId">
+            <value xsi:type="ocl:OperationCallExp" location="59:15-59:42" operationName="getTouchActorId">
+              <source xsi:type="ocl:VariableExp" location="59:15-59:24" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="60:4-60:35" propertyName="touchAction">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="60:19-60:35" name="effect">
+              <source xsi:type="ocl:VariableExp" location="60:19-60:28" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="52:2-55:4">
+        <elements xsi:type="atl:SimpleInPatternElement" location="53:3-53:31" varName="scoreRule" variableExp="/0/@elements.3/@inPattern/@filter/@source /0/@elements.3/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.1/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.2/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="53:15-53:31" name="ScoreRule" model="/17"/>
+        </elements>
+        <filter xsi:type="ocl:OperationCallExp" location="54:4-54:43" operationName="oclIsKindOf">
+          <source xsi:type="ocl:VariableExp" location="54:4-54:13" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+          <arguments xsi:type="ocl:OclModelElement" location="54:26-54:42" name="TouchRule" model="/18"/>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="65:1-82:2" name="Effect2Action">
+      <commentsBefore>-- Transforms a Phydsl ScoreEffect to a Scoring Action</commentsBefore>
+      <outPattern location="68:2-81:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="69:3-81:4" varName="action">
+          <type xsi:type="ocl:OclModelElement" location="69:12-69:26" name="Action" model="/21"/>
+          <bindings location="71:4-71:46" propertyName="gameEnds">
+            <value xsi:type="ocl:OperationCallExp" location="71:16-71:46" operationName="solveBool">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="71:16-71:34" name="boolean">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="71:16-71:26" name="end">
+                  <source xsi:type="ocl:VariableExp" location="71:16-71:22" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="72:4-72:44" propertyName="points">
+            <value xsi:type="ocl:OperationCallExp" location="72:14-72:44" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="72:14-72:33" name="value">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="72:14-72:27" name="points">
+                  <source xsi:type="ocl:VariableExp" location="72:14-72:20" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="73:4-76:13" propertyName="userLoses">
+            <value xsi:type="ocl:IfExp" location="73:17-76:13">
+              <thenExpression xsi:type="ocl:OperationCallExp" location="74:13-74:45" operationName="solveBool">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="74:13-74:33" name="boolean">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="74:13-74:25" name="loses">
+                    <source xsi:type="ocl:VariableExp" location="74:13-74:19" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                  </source>
+                </source>
+              </thenExpression>
+              <condition xsi:type="ocl:OperatorCallExp" location="73:20-73:53" operationName="not">
+                <source xsi:type="ocl:OperationCallExp" location="73:24-73:53" operationName="oclIsUndefined">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="73:24-73:36" name="loses">
+                    <source xsi:type="ocl:VariableExp" location="73:24-73:30" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                  </source>
+                </source>
+              </condition>
+              <elseExpression xsi:type="ocl:BooleanExp" location="75:13-75:18"/>
+            </value>
+          </bindings>
+          <bindings location="77:4-80:12" propertyName="removeActorId">
+            <value xsi:type="ocl:IfExp" location="77:21-80:12">
+              <thenExpression xsi:type="ocl:NavigationOrAttributeCallExp" location="78:12-78:34" name="name">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="78:12-78:29" name="dissapears">
+                  <source xsi:type="ocl:VariableExp" location="78:12-78:18" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                </source>
+              </thenExpression>
+              <condition xsi:type="ocl:OperatorCallExp" location="77:24-77:62" operationName="not">
+                <source xsi:type="ocl:OperationCallExp" location="77:28-77:62" operationName="oclIsUndefined">
+                  <source xsi:type="ocl:NavigationOrAttributeCallExp" location="77:28-77:45" name="dissapears">
+                    <source xsi:type="ocl:VariableExp" location="77:28-77:34" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                  </source>
+                </source>
+              </condition>
+              <elseExpression xsi:type="ocl:StringExp" location="79:12-79:14" stringSymbol=""/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="66:2-67:30">
+        <elements xsi:type="atl:SimpleInPatternElement" location="67:3-67:30" varName="effect" variableExp="/0/@elements.4/@outPattern/@elements.0/@bindings.0/@value/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@condition/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.2/@value/@thenExpression/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.3/@value/@condition/@source/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.3/@value/@thenExpression/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="67:12-67:30" name="ScoreEffect" model="/20"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:Helper" location="84:1-84:90">
+      <definition location="84:8-84:89">
+        <feature xsi:type="ocl:Operation" location="84:42-84:89" name="getCollisionAID">
+          <returnType xsi:type="ocl:StringType" location="84:61-84:67"/>
+          <body xsi:type="ocl:NavigationOrAttributeCallExp" location="84:71-84:89" name="name">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="84:71-84:84" name="elementA">
+              <source xsi:type="ocl:VariableExp" location="84:71-84:75" referredVariable="/23"/>
+            </source>
+          </body>
+        </feature>
+        <context_ location="84:8-84:36">
+          <context_ xsi:type="ocl:OclModelElement" location="84:16-84:36" name="CollisionRule" model="/22"/>
+        </context_>
+      </definition>
+    </elements>
+    <elements xsi:type="atl:Helper" location="86:1-86:89">
+      <definition location="86:8-86:88">
+        <feature xsi:type="ocl:Operation" location="86:42-86:88" name="getCollisionBID">
+          <returnType xsi:type="ocl:StringType" location="86:61-86:67"/>
+          <body xsi:type="ocl:NavigationOrAttributeCallExp" location="86:70-86:88" name="name">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="86:70-86:83" name="elementB">
+              <source xsi:type="ocl:VariableExp" location="86:70-86:74" referredVariable="/25"/>
+            </source>
+          </body>
+        </feature>
+        <context_ location="86:8-86:36">
+          <context_ xsi:type="ocl:OclModelElement" location="86:16-86:36" name="CollisionRule" model="/24"/>
+        </context_>
+      </definition>
+    </elements>
+    <elements xsi:type="atl:Helper" location="88:1-88:68">
+      <definition location="88:8-88:67">
+        <feature xsi:type="ocl:Operation" location="88:37-88:67" name="getTime">
+          <returnType xsi:type="ocl:IntegerType" location="88:48-88:55"/>
+          <body xsi:type="ocl:NavigationOrAttributeCallExp" location="88:58-88:67" name="time">
+            <source xsi:type="ocl:VariableExp" location="88:58-88:62" referredVariable="/27"/>
+          </body>
+        </feature>
+        <context_ location="88:8-88:31">
+          <context_ xsi:type="ocl:OclModelElement" location="88:16-88:31" name="TimeRule" model="/26"/>
+        </context_>
+      </definition>
+    </elements>
+    <elements xsi:type="atl:Helper" location="90:1-90:91">
+      <definition location="90:8-90:90">
+        <feature xsi:type="ocl:Operation" location="90:38-90:90" name="getTouchActorId">
+          <returnType xsi:type="ocl:StringType" location="90:57-90:63"/>
+          <body xsi:type="ocl:NavigationOrAttributeCallExp" location="90:66-90:90" name="name">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="90:66-90:85" name="elementTouched">
+              <source xsi:type="ocl:VariableExp" location="90:66-90:70" referredVariable="/29"/>
+            </source>
+          </body>
+        </feature>
+        <context_ location="90:8-90:32">
+          <context_ xsi:type="ocl:OclModelElement" location="90:16-90:32" name="TouchRule" model="/28"/>
+        </context_>
+      </definition>
+    </elements>
+    <elements xsi:type="atl:Helper" location="92:1-96:8">
+      <definition location="92:8-96:7">
+        <feature xsi:type="ocl:Operation" location="92:41-96:7" name="solveBool">
+          <returnType xsi:type="ocl:BooleanType" location="92:54-92:61"/>
+          <body xsi:type="ocl:IfExp" location="93:2-96:7">
+            <thenExpression xsi:type="ocl:BooleanExp" location="94:7-94:11" booleanSymbol="true"/>
+            <condition xsi:type="ocl:OperatorCallExp" location="93:5-93:19" operationName="=">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="93:5-93:15" name="value">
+                <source xsi:type="ocl:VariableExp" location="93:5-93:9" referredVariable="/31"/>
+              </source>
+              <arguments xsi:type="ocl:IntegerExp" location="93:18-93:19" integerSymbol="1"/>
+            </condition>
+            <elseExpression xsi:type="ocl:BooleanExp" location="95:7-95:12"/>
+          </body>
+        </feature>
+        <context_ location="92:8-92:34">
+          <context_ xsi:type="ocl:OclModelElement" location="92:16-92:34" name="BooleanType" model="/30"/>
+        </context_>
+      </definition>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="5:14-5:21" name="Scoring" model="/0/@outModels.0"/>
+  <ocl:OclModel location="5:32-5:38" name="Phydsl" model="/0/@inModels.0"/>
+  <ocl:OclModel location="10:11-10:17" name="Phydsl" elements="/0/@elements.0/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="12:16-12:23" name="Scoring" elements="/0/@elements.0/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="13:18-13:24" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source/@source"/>
+  <ocl:OclModel location="13:76-13:82" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@body/@arguments.0"/>
+  <ocl:OclModel location="14:13-14:19" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source/@source"/>
+  <ocl:OclModel location="14:71-14:77" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@body/@arguments.0"/>
+  <ocl:OclModel location="15:15-15:21" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@source/@source"/>
+  <ocl:OclModel location="15:73-15:79" name="Phydsl" elements="/0/@elements.0/@outPattern/@elements.0/@bindings.2/@value/@body/@arguments.0"/>
+  <ocl:OclModel location="22:15-22:21" name="Phydsl" elements="/0/@elements.1/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="23:26-23:32" name="Phydsl" elements="/0/@elements.1/@inPattern/@filter/@arguments.0"/>
+  <ocl:OclModel location="26:19-26:26" name="Scoring" elements="/0/@elements.1/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="39:15-39:21" name="Phydsl" elements="/0/@elements.2/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="40:26-40:32" name="Phydsl" elements="/0/@elements.2/@inPattern/@filter/@arguments.0"/>
+  <ocl:OclModel location="43:15-43:22" name="Scoring" elements="/0/@elements.2/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="53:15-53:21" name="Phydsl" elements="/0/@elements.3/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="54:26-54:32" name="Phydsl" elements="/0/@elements.3/@inPattern/@filter/@arguments.0"/>
+  <ocl:OclModel location="57:15-57:22" name="Scoring" elements="/0/@elements.3/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="67:12-67:18" name="Phydsl" elements="/0/@elements.4/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="69:12-69:19" name="Scoring" elements="/0/@elements.4/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="84:16-84:22" name="Phydsl" elements="/0/@elements.5/@definition/@context_/@context_"/>
+  <ocl:VariableDeclaration location="84:71-84:75" varName="self" variableExp="/0/@elements.5/@definition/@feature/@body/@source/@source"/>
+  <ocl:OclModel location="86:16-86:22" name="Phydsl" elements="/0/@elements.6/@definition/@context_/@context_"/>
+  <ocl:VariableDeclaration location="86:70-86:74" varName="self" variableExp="/0/@elements.6/@definition/@feature/@body/@source/@source"/>
+  <ocl:OclModel location="88:16-88:22" name="Phydsl" elements="/0/@elements.7/@definition/@context_/@context_"/>
+  <ocl:VariableDeclaration location="88:58-88:62" varName="self" variableExp="/0/@elements.7/@definition/@feature/@body/@source"/>
+  <ocl:OclModel location="90:16-90:22" name="Phydsl" elements="/0/@elements.8/@definition/@context_/@context_"/>
+  <ocl:VariableDeclaration location="90:66-90:70" varName="self" variableExp="/0/@elements.8/@definition/@feature/@body/@source/@source"/>
+  <ocl:OclModel location="92:16-92:22" name="Phydsl" elements="/0/@elements.9/@definition/@context_/@context_"/>
+  <ocl:VariableDeclaration location="93:5-93:9" varName="self" variableExp="/0/@elements.9/@definition/@feature/@body/@condition/@source/@source"/>
+</xmi:XMI>

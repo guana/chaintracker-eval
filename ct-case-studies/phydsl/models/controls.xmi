@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ualberta.edu.cs.ssrg.phy.controls:Controls xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ualberta.edu.cs.ssrg.phy.controls="http://ualberta.edu.cs.ssrg.phy.controls">
+  <controlButtons name="left" direction="LEFT" image="c://phydsl/images/left.png" positionX="0" positionY="4"/>
+  <controlButtons name="right" direction="RIGHT" image="c://phydsl/images/right.png" positionX="0" positionY="5"/>
+</ualberta.edu.cs.ssrg.phy.controls:Controls>

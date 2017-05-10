@@ -1,0 +1,29 @@
+-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore
+-- @path Scoring=/examples/PhyDSLUpdated/metamodels/Controls.ecore
+
+module Game2Controls;
+create OUT : Controls from IN : Phydsl;
+
+-- Entrypoint to Phydsl to Controls
+rule main {
+	from
+		model : Phydsl!Model
+	to 
+		controls : Controls!Controls (
+			controlButtons <- model.game.first().controlSection.first().controls
+		)
+}
+
+-- Transforms a control into a button
+rule Control2Button {
+	from
+		control : Phydsl!Control
+	to 
+		btn : Controls!Button (
+			name <- control.name,
+			direction <- control.direction.direction.value,
+			image <- control.image.value,
+			positionX <- control.cordinate.x.toString(),
+			positionY <- control.cordinate.y.toString()
+		)
+}

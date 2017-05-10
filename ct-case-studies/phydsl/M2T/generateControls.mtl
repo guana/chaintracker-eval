@@ -1,0 +1,113 @@
+[comment encoding = UTF-8 /]
+[module generateControls('http://ualberta.edu.cs.ssrg.phy.controls')]
+
+
+[template public generateElement(aControls : Controls)]
+[comment @main/]
+[file ('ControlManager.java', false, 'UTF-8')]
+package edu.ualberta.ssrg.mda.physics.template.main;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
+
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+
+import edu.ualberta.ssrg.mda.physics.template.persistence.Event;
+
+import android.util.Log;
+
+public class ControlManager implements Observer {
+
+	[for (ctrl: Button | controlButtons)]
+	public static Object [ctrl.name/]Id = new Object();
+	[/for]		
+
+	public HashMap<Object, int[ '[' /][ ']' /]> controlImages = new HashMap<Object, int[ '[' /][ ']' /]>();
+
+	private PhysicsModel world;
+	
+	public ControlManager(PhysicsModel world) {
+		this.world = world;
+
+		[for (ctrl: Button | controlButtons)]
+		controlImages.put([ctrl.name/]Id, new int[ '[' /][ ']' /] { R.drawable.[ctrl.image/]_1280, R.drawable.[ctrl.image/]_800,
+			R.drawable.[ctrl.image/]_480, R.drawable.[ctrl.image/]_320 });
+		[/for]	
+	}
+
+	private float MAX_VELOCITY_X = 4f;
+
+	public void objectMoveRight(Object toMoveId){
+		moveBody(toMoveId, new Vec2(2f, 0));
+	}
+
+	public void objectMoveLeft(Object toMoveId){
+		moveBody(toMoveId, new Vec2(-2f, 0));
+	}
+	
+	public void objectMoveUp(Object toMoveId){
+		moveBody(toMoveId, new Vec2(0, -5));
+	}
+	
+	public void objectMoveDown(Object toMoveId){
+		moveBody(toMoveId, new Vec2(0, 5));
+	}
+	
+	public void objectRemove(Object toMoveId){
+		Body body = world.findBody(toMoveId);
+		if(body!=null){
+			Log.w("CONTROL", body.toString());
+			
+			world.deleteItem(body);
+		}
+	}
+
+	public void update(Observable o, Object pl) {
+		ArrayList<Event> payload = (ArrayList<Event>) pl;
+		Event ev = payload.get(0);
+		Body a = ev.getBodies().get(0);
+		
+		if (ev.getType() != Event.EventType.TOUCH)
+			return;
+		
+		[for (ctrl: Button | controlButtons)]
+		if (a.m_userData == [ctrl.name/]Id) {
+			objectMove[ctrl.direction/](PhysicsView.mainActorId); 
+		} 
+		[/for]	
+	}
+	
+	private void moveBody(Object toMoveId, Vec2 impulse) {
+		Body body = world.findBody(toMoveId);
+		if(body!=null){
+			Log.w("CONTROL", body.toString());
+			
+			Vec2 pos = body.getWorldCenter();
+			body.setLinearVelocity(capVelocity(body.getLinearVelocity()));
+			body.applyLinearImpulse(impulse, pos);
+		}
+	}
+	
+	private Vec2 capVelocity(Vec2 currentVelocity) {
+		Vec2 capVelocity = currentVelocity;
+		
+		if (Math.abs(currentVelocity.x) > MAX_VELOCITY_X) {
+			capVelocity.x = MAX_VELOCITY_X * Math.signum(currentVelocity.x);
+		}
+
+		return capVelocity; 
+	}
+	
+	public void addGameControls() {
+		[for (ctrl: Button | controlButtons)]
+		world.addBox([ctrl.positionX/]f, [ctrl.positionY/]f, [ctrl.name/]Id, 0, 0, 0, false, true);
+		world.setScrollableItem([ctrl.name/]Id, [ctrl.positionX/]f, [ctrl.positionY/]f);
+
+		[/for]	
+	}
+}
+[/file]
+[/template]

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<edu.ca.ualberta.ssrg.gui:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:edu.ca.ualberta.ssrg.gui="http://edu.ca.ualberta.ssrg.gui" name="SoundCloud" useStorage="true" useNetwork="true" package="ssrg.ualberta.soundcloud">
+  <screens name="Login" isMain="true">
+    <actions name="toPlayer" destination="//@screens.1">
+      <button name="loginButton"/>
+    </actions>
+  </screens>
+  <screens name="Player"/>
+</edu.ca.ualberta.ssrg.gui:Application>

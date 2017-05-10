@@ -1,0 +1,450 @@
+[comment encoding = UTF-8 /]
+[module generateGraphics('http://ualberta.edu.cs.ssrg.phy.layout')]
+
+
+[template public generateElement(aLayout : Layout)]
+[comment @main/]
+[file ('DrawingHelper.java', false, 'UTF-8')]
+package edu.ualberta.ssrg.mda.physics.template.main;
+
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.Fixture;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.util.Log;
+
+public class DrawingHelper {
+	
+	int[ '[' /][ ']' /] screenSizes = { 1280, 800, 480, 320 };
+	
+	// Dynamic bodies images
+	private HashMap<Object, Bitmap> actorBitmaps; 
+
+	[for (it : Actor | actors)]
+	private Bitmap [it.actorId/];
+	[/for]
+	private Bitmap crate_blue;
+	private Bitmap board;
+	private boolean imagesInitialized;
+
+	private static int[ '[' /][ ']' /] backgroundResourceId320 = { 
+		[for (slice: BackgroundSlice | background.backgroundSlices)]
+		[if i <> 1],[/if]R.drawable.[slice.image/]_320
+		[/for]
+	};
+	private static int[ '[' /][ ']' /] backgroundResourceId480 = { 
+		[for (slice: BackgroundSlice | background.backgroundSlices)]
+		[if i <> 1],[/if]R.drawable.[slice.image/]_480
+		[/for]
+	};
+	private static int[ '[' /][ ']' /] backgroundResourceId800 = { 
+		[for (slice: BackgroundSlice | background.backgroundSlices)]
+		[if i <> 1],[/if]R.drawable.[slice.image/]_800
+		[/for]
+	};
+	private static int[ '[' /][ ']' /] backgroundResourceId1280 = { 
+		[for (slice: BackgroundSlice | background.backgroundSlices)]
+		[if i <> 1],[/if]R.drawable.[slice.image/]_1280
+		[/for]
+	};
+	private static int BACKGROUND_SLICES = backgroundResourceId320.length;
+	
+	[if not background.cameraType.equalsIgnoreCase('none')]
+	private Bitmap[ '[' /][ ']' /] background;	
+	private float[ '[' /][ ']' /] backgroundWidth;
+	private float[ '[' /][ ']' /] accumulatedBackgroundWidth;
+	[else]
+	private Bitmap background;
+	private float backgroundWidth;
+	[/if]
+	private float backgroundHeight;
+	
+	[if not background.cameraType.equalsIgnoreCase('none')]
+	private Timer backgroundTimer;
+	[/if]
+
+	private PhysicsView view;
+	private Canvas viewCanvas;
+	private Resources viewResources;
+	private ControlManager controlManager;
+	
+	//Different layers where objects in the screen are painted (text elements, actors, and background_
+	private Paint textPaintLayer = new Paint();
+	private Paint actorsPaintLayer = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private Paint backgroundPaintLayer = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
+	public DrawingHelper(PhysicsView view, Canvas canvas, ControlManager controlManager) {
+		this.view = view;
+		this.viewResources = view.getResources();
+		this.viewCanvas = canvas;
+		this.controlManager = controlManager;
+		
+		actorBitmaps = new HashMap<Object, Bitmap>();
+	}
+	
+	// ////////////////////////////
+	// Image Initialization
+	// ////////////////////////////
+	public void initializeImages() {
+		if (imagesInitialized) return;		
+
+		[for (it : Actor | actors)]
+		int[ '[' /][ ']' /]  [it.actorId/]s = { R.drawable.[it.image/]_1280, R.drawable.[it.image/]_800,
+			R.drawable.[it.image/]_480, R.drawable.[it.image/]_320 };
+		[/for]	
+
+		int[ '[' /][ ']' /] borders = { R.drawable.crate_blue_1280,
+				R.drawable.crate_blue_800, R.drawable.crate_blue_480,
+				R.drawable.crate_blue_320 };
+
+		int[ '[' /][ ']' /] boards = { R.drawable.space_board, R.drawable.space_board,
+				R.drawable.space_board, R.drawable.space_board };
+		
+		int size = view.getWidth();
+
+		[for (it : Actor | actors)]
+		[it.actorId/] = getImageFromArrayForSize(viewResources, [it.actorId/]s, screenSizes, size);
+		actorBitmaps.put(PhysicsView.[it.actorId/]Id, [it.actorId/]);
+		[/for]
+
+		crate_blue = getImageFromArrayForSize(viewResources, borders, screenSizes, size);
+		board = getImageFromArrayForSize(viewResources, boards, screenSizes, size);
+		
+		actorBitmaps.put(PhysicsView.crate_blueId, crate_blue);
+
+		for (Object control: controlManager.controlImages.keySet()) {
+			Bitmap ctrlBitmap = getImageFromArrayForSize(viewResources, controlManager.controlImages.get(control), screenSizes, size);
+			actorBitmaps.put(control, ctrlBitmap);
+		}
+
+		imagesInitialized = true;
+	}
+	
+	public void initializeBackground() {
+		if (background != null) return;
+
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		background = new Bitmap[ '[' /]BACKGROUND_SLICES[ ']' /];
+		backgroundWidth = new float[ '[' /]BACKGROUND_SLICES[ ']' /];
+		accumulatedBackgroundWidth = new float[ '[' /]BACKGROUND_SLICES[ ']' /];
+		
+		for(int i = 0; i < backgroundWidth.length; i++) {
+			loadBackground(i);
+			backgroundWidth[ '[' /]i[ ']' /] = background[ '[' /]i[ ']' /].getScaledWidth(viewCanvas);
+			
+			if (i != 0 && i != 1) {
+				background[ '[' /]i[ ']' /].recycle();
+			}
+		}
+		
+		backgroundHeight = background[ '[' /]0[ ']' /].getScaledHeight(viewCanvas);
+		
+		for (int i = 0; i < backgroundWidth.length; i++) {
+			if (i == 0) {
+				accumulatedBackgroundWidth[ '[' /]i[ ']' /] = backgroundWidth[ '[' /]i[ ']' /];
+			} else {
+				accumulatedBackgroundWidth[ '[' /]i[ ']' /] = accumulatedBackgroundWidth[ '[' /]i-1[ ']' /] + backgroundWidth[ '[' /]i[ ']' /];
+			}
+		}
+		
+		backgroundTimer = new Timer();
+		if (BACKGROUND_SLICES > 1) {
+			backgroundTimer.scheduleAtFixedRate(new TimerTask() {
+
+				public void run() {
+					premptivelyLoadBackground();
+			
+				}
+			}, 25, 25);
+		}
+		[else]
+			int[ '[' /][ ']' /] backgrounds = { backgroundResourceId1280[ '[' /]0[ ']' /], backgroundResourceId800[ '[' /]0[ ']' /], 
+				backgroundResourceId480[ '[' /]0[ ']' /], backgroundResourceId320[ '[' /]0[ ']' /] };
+
+			background = getImageFromArrayForSize(viewResources, backgrounds, screenSizes, view.getWidth());
+
+			backgroundWidth = background.getScaledWidth(viewCanvas);
+			backgroundHeight = background.getScaledHeight(viewCanvas);
+		[/if]
+	}
+	
+	[if not background.cameraType.equalsIgnoreCase('none')]
+	private void loadBackground(int slice) {		
+		if (background[ '[' /]slice[ ']' /] == null || background[ '[' /]slice[ ']' /].isRecycled()) {
+		
+			int[ '[' /][ ']' /] backgrounds = { backgroundResourceId1280[ '[' /]slice[ ']' /], backgroundResourceId800[ '[' /]slice[ ']' /], 
+			backgroundResourceId480[ '[' /]slice[ ']' /], backgroundResourceId320[ '[' /]slice[ ']' /] };
+
+			background[ '[' /]slice[ ']' /] = getImageFromArrayForSize(viewResources, backgrounds, screenSizes, view.getWidth());
+		} 
+	}
+
+	private void premptivelyLoadBackground() {
+		Vec2 offset = getViewOffset();
+		int slice = getBackgroundSlice(offset.x);
+		
+		Body b = view.getMainActor();
+		if (b == null) return;
+		float direction = Math.signum(b.getLinearVelocity().x);
+
+		for (int i = 0; i < background.length; i++) {
+			if ((i == slice) || (i == slice + 1) || (i == slice - 1)){
+				loadBackground(i);
+			} else if (i == slice + 2 && direction == 1f) {
+				loadBackground(i);
+			}
+			else {			
+				if (background[ '[' /]i[ ']' /] != null && !background[ '[' /]i[ ']' /].isRecycled()) {
+					background[ '[' /]i[ ']' /].recycle();
+				}
+			}
+		}
+	}
+	[/if]
+
+	// ////////////////////////////
+	// Draw Canvas
+	// ////////////////////////////
+	public void drawBackgroundLayer() {
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		Vec2 offset = getViewOffset();
+		float x_start = 0f;
+		
+		int backgroundSlice = getBackgroundSlice(offset.x);
+		
+		if (backgroundSlice == 0) {
+			x_start = 0;
+		} else {
+			x_start = accumulatedBackgroundWidth[ '[' /]backgroundSlice - 1[ ']' /];
+		}
+		
+		viewCanvas.translate(-offset.x, -offset.y);
+		
+		loadBackground(backgroundSlice);
+		viewCanvas.drawBitmap(background[ '[' /]backgroundSlice[ ']' /], x_start, 0, backgroundPaintLayer);
+		
+		if (backgroundSlice != BACKGROUND_SLICES - 1 
+				&& (backgroundWidth[ '[' /]backgroundSlice[ ']' /]  - offset.x < view.getWidth())) {
+			loadBackground(backgroundSlice + 1);
+			viewCanvas.drawBitmap(background[ '[' /]backgroundSlice + 1[ ']' /], accumulatedBackgroundWidth[ '[' /]backgroundSlice[ ']' /], 0, backgroundPaintLayer);
+		}
+
+		viewCanvas.translate(offset.x, offset.y);
+		[else]
+		viewCanvas.drawBitmap(background, 0, 0, backgroundPaintLayer);
+		[/if]
+	}
+	
+	public void drawActorLayer() {
+		float scale = view.getDrawingScale();
+
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		Vec2 offset = getViewOffset();
+		viewCanvas.translate(-offset.x, -offset.y);
+		[/if]
+
+		Body body = view.getBodyIterator();
+
+		while (body != null) {
+			if (body.m_userData == null) {
+				body = body.getNext();
+				continue;
+			}
+		
+			[if not background.cameraType.equalsIgnoreCase('none')]
+			view.scrollBody(body.m_userData, offset.x/view.getDrawingScale(), offset.y/view.getDrawingScale());
+			[/if]
+
+			Vec2 position = body.getPosition();
+			Fixture fixture = body.getFixtureList();
+			Shape shape = fixture.getShape();
+			
+			if(!actorBitmaps.containsKey(body.m_userData)) {
+				throw new RuntimeException("No bitmap loaded for " + body.m_userData);
+			}
+			Bitmap bitmap = actorBitmaps.get(body.m_userData);
+			
+			if (shape instanceof PolygonShape) {
+				viewCanvas.save(Canvas.MATRIX_SAVE_FLAG);
+				viewCanvas.rotate((float) (180 * body.getAngle() / Math.PI), scale * position.x, scale * position.y);
+				
+				viewCanvas.drawBitmap(bitmap, scale * (position.x), scale * (position.y), actorsPaintLayer);
+				
+				viewCanvas.restore();
+			}
+			else if (shape instanceof CircleShape) {
+				CircleShape circleShape = (CircleShape) shape;
+				viewCanvas.save();
+				viewCanvas.rotate((float) (180 * body.getAngle() / Math.PI), scale * position.x, scale * position.y);
+				viewCanvas.drawBitmap(bitmap, scale * (position.x - circleShape.m_radius), scale * (position.y - circleShape.m_radius), actorsPaintLayer);
+				viewCanvas.restore();
+			}
+
+			body = body.getNext();
+		}
+		
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		viewCanvas.translate(offset.x, offset.y);
+		[/if]
+	}
+	
+	public void drawTextLayer() {
+		textPaintLayer.setARGB(255, 255, 255, 255);
+		int fontSize = 40;
+		textPaintLayer.setTextSize(fontSize);
+		
+		int width = board.getScaledWidth(viewCanvas);
+		int width_margin = (int) (width * 0.15);
+		
+		int height_margin = 10;
+		int height =  (int) (board.getScaledHeight(viewCanvas)/2) + height_margin/2 + fontSize/2; 
+		
+		viewCanvas.drawBitmap(board, 0, height_margin, textPaintLayer);
+		viewCanvas.drawText(view.getRunTimeString(), width_margin, height, textPaintLayer);
+		
+		viewCanvas.drawBitmap(board, (view.getWidth() - width), height_margin, textPaintLayer);
+		viewCanvas.drawText(view.getScoreString(), 
+					(view.getWidth() - width + width_margin), height, textPaintLayer);
+	}
+	
+	// ////////////////////////////
+	// Utilities
+	// ////////////////////////////
+	[if not background.cameraType.equalsIgnoreCase('none')]
+	private int getBackgroundSlice(float x) {
+		if (backgroundWidth.length == 1) return 0;
+		
+		for(int i = 0; i < backgroundWidth.length; i++) {
+			float width = backgroundWidth[ '[' /]i[ ']' /];
+			
+			if (i == 0) {
+				if (x < width) {
+					return i;
+				}
+				else
+					continue;
+			}
+			
+			if (i == backgroundWidth.length - 1) {
+				return i;
+			}
+			
+			if (accumulatedBackgroundWidth[ '[' /]i - 1[ ']' /] <= x && x < accumulatedBackgroundWidth[ '[' /]i[ ']' /]) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	public Vec2 getViewOffset() {
+		Body actor = view.getMainActor(); 
+		if (actor == null) {
+			return new Vec2(0f, 0f);
+		}
+		
+		Vec2 offset =  new Vec2((actor.getPosition()));
+		
+		offset.x = calculateOffset(offset.x, view.getWidth(), accumulatedBackgroundWidth[ '[' /]BACKGROUND_SLICES - 1[ ']' /]);
+		offset.y = calculateOffset(offset.y, view.getHeight(), backgroundHeight);
+		
+		return offset;
+	}
+	
+	private float calculateOffset(float value, float cameraMax, float backgroundMax) {
+		[if background.cameraType.equalsIgnoreCase('continuous')]		
+		float offset =  view.getDrawingScale()*(value - 2);
+		[elseif background.cameraType.equalsIgnoreCase('discrete')]
+		float offset = (cameraMax * ((float)Math.floor(value*view.getDrawingScale()/cameraMax))); 
+		[/if]
+		
+		if (offset < 0) {
+			offset = 0f;
+		}
+		
+		if (backgroundMax > 0 && (backgroundMax - offset) < cameraMax) {
+			offset= backgroundMax - cameraMax;
+		}
+		
+		return Math.round(offset);
+	}
+	[/if]
+
+	// Loading the bitmaps for the representation of the dynamic bodies
+	private static Bitmap getImageFromArrayForSize(Resources res, int[ '[' /][ ']' /] resIds, int[ '[' /][ ']' /] sizes, int size) {
+
+		Bitmap bmp = null;
+
+		for (int i = 0; i < sizes.length; i++) {
+			if (sizes[ '[' /]i[ ']' /] == size) {
+				bmp = BitmapFactory.decodeResource(res, resIds[ '[' /]i[ ']' /]);
+				break;
+			}
+		}
+
+		if (bmp == null) {
+			Matrix matrix = new Matrix();
+			float scale = ((float) size) / sizes[ '[' /]0[ ']' /];
+			matrix.postScale(scale, scale);
+			bmp = BitmapFactory.decodeResource(res, resIds[ '[' /]0[ ']' /]);
+			bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
+					bmp.getHeight(), matrix, true);
+		}
+		return bmp;
+	}
+	
+	public float getBackgroundWidth() {
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		return accumulatedBackgroundWidth[ '[' /]BACKGROUND_SLICES - 1[ ']' /];
+		[else]
+		return backgroundWidth;
+		[/if]
+	}
+	
+	public float getBackgroundHeight() {
+		return backgroundHeight;
+	}
+
+	// ////////////////////////////
+	// Clean up
+	// ////////////////////////////
+	public void cleanup() {
+		imagesInitialized = false;
+
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		if (backgroundTimer != null) backgroundTimer.cancel();
+		[/if]
+
+		for (Bitmap b : actorBitmaps.values()) {
+			if (b != null && !b.isRecycled()) {
+				b.recycle();
+			}
+		}
+		
+		[if not background.cameraType.equalsIgnoreCase('none')]
+		if (background != null) {
+			for (Bitmap b : background) {
+				if ( b != null && !b.isRecycled()) {
+					b.recycle();
+				}
+			}
+		}
+		[else]
+		background.recycle();
+		[/if]
+	}
+}
+[/file]
+[/template]

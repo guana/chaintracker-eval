@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="phydsl" nsURI="http://www.edu.ualberta/cs/ssrg/phy/Phydsl" nsPrefix="phydsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resources" upperBound="-1"
+        eType="#//Resources" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="game" upperBound="-1" eType="#//Game"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#//AbstractElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericType" eSuperTypes="#//AbstractElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//AbstractElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Resources">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataTypes" upperBound="-1"
+        eType="#//AbstractElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Game">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mobileActorSection" upperBound="-1"
+        eType="#//MobileActorSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticActorSection" upperBound="-1"
+        eType="#//StaticActorSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layoutSection" upperBound="-1"
+        eType="#//LayoutSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="evironmentSection" upperBound="-1"
+        eType="#//EvironmentSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activitySection" upperBound="-1"
+        eType="#//ActivitySection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="socoringSection" upperBound="-1"
+        eType="#//ScoringSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="controlSection" upperBound="-1"
+        eType="#//ControlSection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metricsSection" upperBound="-1"
+        eType="#//MetricsSection" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MetricsSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="enabled" eType="#//BooleanType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScoringSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scoreRules" upperBound="-1"
+        eType="#//ScoreRule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="controls" upperBound="-1"
+        eType="#//Control" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MobileActorSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actors" upperBound="-1"
+        eType="#//Actor" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticActorSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actors" upperBound="-1"
+        eType="#//Actor" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LayoutSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="grid" upperBound="-1" eType="#//Grid"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locations" upperBound="-1"
+        eType="#//Location" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EvironmentSection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" upperBound="-1"
+        eType="#//Environment" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Control">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="direction" eType="#//Direction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="image" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cordinate" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Environment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gravity" upperBound="-1"
+        eType="#//Gravity" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="backgroudFile" eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="camera" eType="#//Camera"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="touchscreen" eType="#//Draggable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mainActorID" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ActivitySection">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activities" upperBound="-1"
+        eType="#//Activity" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Activity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activityDefinition" upperBound="-1"
+        eType="#//ActivityDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Grid">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cordinate" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Actor">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actorDefinition" upperBound="-1"
+        eType="#//ActorDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ActorDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="density" eType="#//Density"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elasticity" eType="#//Elasticity"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="friction" eType="#//Friction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="isBall" eType="#//Ball"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imageFile" eType="#//DataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ActivityDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedElement" eType="#//Actor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="frequency" eType="#//Frequency"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="angularSpeed" eType="#//AngularSpeed"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linearSpeed" eType="#//LinearSpeed"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cordinate" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScoreEffect">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" eType="#//SignedInt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="end" eType="#//Ends" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loses" eType="#//Loses"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dissapears" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignedInt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Location">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//Actor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cordinate" eType="#//Coordinate"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScoreRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" eType="#//ScoreEffect"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeRule" eSuperTypes="#//ScoreRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CollisionRule" eSuperTypes="#//ScoreRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementA" eType="#//Actor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementB" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TouchRule" eSuperTypes="#//ScoreRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementTouched" eType="#//Actor"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Coordinate">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Friction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="friction" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ends">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boolean" eType="#//BooleanType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Draggable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boolean" eType="#//BooleanType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Loses">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boolean" eType="#//BooleanType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ball">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boolean" eType="#//BooleanType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Elasticity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elasticity" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AngularSpeed">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="angularSpeed" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LinearSpeed">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linearSpeed" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Frequency">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="frequency" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Camera">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="camera" eType="#//DataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Direction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="direction" eType="#//DataType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Density">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="density" eType="#//NumericType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gravity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gravity" eType="#//NumericType"/>
+  </eClassifiers>
+</ecore:EPackage>

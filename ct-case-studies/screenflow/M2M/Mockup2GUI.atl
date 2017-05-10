@@ -1,0 +1,56 @@
+-- @path Mockup=/Mockup2GUI/metamodels/Mockup.ecore
+-- @path GUI=/Mockup2GUI/metamodels/GUI.ecore
+-- @atlcompiler emftvm
+
+module Mockup2GUI;
+create OUT : GUI from IN : Mockup;
+
+rule Model2Application {
+	from
+		mockup: Mockup!Mockup
+	to 
+		application : GUI!Application (
+			name <- mockup.prototype.name,
+			package <- mockup.prototype.package,
+			useCamera <- mockup.prototype.permisionSection.permissions.camera.endsWith('true'),
+			useGeoLocation <- mockup.prototype.permisionSection.permissions.geolocation.endsWith('true'),
+			useNetwork <- mockup.prototype.permisionSection.permissions.network.endsWith('true'),
+			useStorage <- mockup.prototype.permisionSection.permissions.storage.endsWith('true'),
+			screens <- mockup.prototype.screensSection.screens
+		)
+}
+
+rule MockupScreen2ApplicationScreen{
+	from
+		mockscreen: Mockup!Screen
+	to
+		appscreen: GUI!Screen(
+			name <- mockscreen.name,
+			isMain <- mockscreen.main.toString().endsWith('true'),
+			actions <- mockscreen.getAllTransitions()
+		)
+}
+
+rule Transition2Action{
+	from
+		transiton : Mockup!Transition
+	to 
+		action : GUI!Action (
+			name <- transiton.name,
+			destination <- transiton.toScreen,
+			button <- transiton.trigger
+		)
+}
+
+rule Trigger2Button{
+	from
+		trigger : Mockup!Trigger
+	to 
+		button : GUI!Button (
+			name <- trigger.name,
+			isMenuItem <- trigger.menu.toString().endsWith('true')
+		)
+}
+
+helper context Mockup!Screen def: getAllTransitions() : Set(Mockup!Transition) = 
+	Mockup!Transition.allInstances()->select(i | i.fromScreen.name.endsWith(self.name));

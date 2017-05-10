@@ -1,0 +1,96 @@
+-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore
+-- @path Scoring=/examples/PhyDSLUpdated/metamodels/Scoring.ecore
+
+module Game2Scoring;
+create OUT : Scoring from IN : Phydsl;
+
+-- Entrypoint to Phydsl to Scoring
+rule main {
+	from
+		model : Phydsl!Model
+	to 
+		scoreRules : Scoring!ScoreRules (
+			collisions <- Phydsl!ScoreRule.allInstances()->select(e | e.oclIsKindOf(Phydsl!CollisionRule)),
+			timed <- Phydsl!ScoreRule.allInstances()->select(e | e.oclIsKindOf(Phydsl!TimeRule)),
+			touches <- Phydsl!ScoreRule.allInstances()->select(e | e.oclIsKindOf(Phydsl!TouchRule))
+		)
+}
+
+-- Transforms a generic Score Rule into a Collision rule using helpers to deal with the polymorphism of subfeatures due grammar
+rule ScoreRule2CollisionRule {
+	from
+		scoreRule : Phydsl!ScoreRule(
+			scoreRule.oclIsKindOf(Phydsl!CollisionRule) -- filters only score rules of type 
+		)
+	to 
+		collisionRule : Scoring!CollisionRule (
+			collisionId <- scoreRule.name,
+			actorAId <- scoreRule.getCollisionAID(),
+			actorBId <- scoreRule.getCollisionBID(),
+			collisionAction <- scoreRule.effect -- called rule Effe2Action
+			
+
+		)
+}
+
+-- Transforms a generic Score Rule into a Timed Rule using helpers to deal with the polymorphism of subfeatures due grammar
+rule ScoreRule2TimedRule {
+	from
+		scoreRule : Phydsl!ScoreRule(
+			scoreRule.oclIsKindOf(Phydsl!TimeRule)
+		)
+	to 
+		timedRule : Scoring!TimedRule (
+			timedId <- scoreRule.name,
+			time <- scoreRule.getTime(),
+			timedAction <- scoreRule.effect
+		)
+}
+
+-- Transforms a generic Score Rule into a Touch Rule using helpers to deal with the polymorphism of subfeatures due grammar
+rule ScoreRule2TouchRule {
+	from
+		scoreRule : Phydsl!ScoreRule(
+			scoreRule.oclIsKindOf(Phydsl!TouchRule)
+		)
+	to 
+		touchRule : Scoring!TouchRule (
+			touchId <- scoreRule.name,
+			actorId <- scoreRule.getTouchActorId(),
+			touchAction <- scoreRule.effect
+		)
+}
+
+-- Transforms a Phydsl ScoreEffect to a Scoring Action
+rule Effect2Action {
+	from
+		effect : Phydsl!ScoreEffect
+	to 
+		action : Scoring!Action (
+			
+			gameEnds <- effect.end.boolean.solveBool(),
+			points <- effect.points.value.toString(),
+			userLoses <- if not effect.loses.oclIsUndefined()
+						 then effect.loses.boolean.solveBool()
+						 else false
+						 endif,
+			removeActorId <- if not effect.dissapears.oclIsUndefined()
+						then effect.dissapears.name
+						else ''
+						endif
+		)
+}
+
+helper context Phydsl!CollisionRule def: getCollisionAID(): String =  self.elementA.name;
+
+helper context Phydsl!CollisionRule def: getCollisionBID(): String = self.elementB.name;
+
+helper context Phydsl!TimeRule def: getTime(): Integer = self.time;
+
+helper context Phydsl!TouchRule def: getTouchActorId(): String = self.elementTouched.name;
+
+helper context Phydsl!BooleanType  def: solveBool(): Boolean = 
+	if self.value = 1
+	then true
+	else false
+	endif;

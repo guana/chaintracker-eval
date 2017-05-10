@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL">
+  <atl:Module location="4:1-29:2" name="Game2Controls">
+    <commentsBefore>-- @path Phydsl=/examples/PhyDSLUpdated/metamodels/Phydsl.ecore</commentsBefore>
+    <commentsBefore>-- @path Scoring=/examples/PhyDSLUpdated/metamodels/Controls.ecore</commentsBefore>
+    <inModels location="5:28-5:39" name="IN" metamodel="/2"/>
+    <outModels location="5:8-5:22" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="8:1-15:2" name="main">
+      <commentsBefore>-- Entrypoint to Phydsl to Controls</commentsBefore>
+      <commentsAfter>-- Transforms a control into a button</commentsAfter>
+      <outPattern location="11:2-14:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="12:3-14:4" varName="controls">
+          <type xsi:type="ocl:OclModelElement" location="12:14-12:31" name="Controls" model="/4"/>
+          <bindings location="13:4-13:72" propertyName="controlButtons">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="13:22-13:72" name="controls">
+              <source xsi:type="ocl:OperationCallExp" location="13:22-13:63" operationName="first">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="13:22-13:55" name="controlSection">
+                  <source xsi:type="ocl:OperationCallExp" location="13:22-13:40" operationName="first">
+                    <source xsi:type="ocl:NavigationOrAttributeCallExp" location="13:22-13:32" name="game">
+                      <source xsi:type="ocl:VariableExp" location="13:22-13:27" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+                    </source>
+                  </source>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="9:2-10:23">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:3-10:23" varName="model" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source/@source/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:11-10:23" name="Model" model="/3"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="18:1-29:2" name="Control2Button">
+      <commentsBefore>-- Transforms a control into a button</commentsBefore>
+      <outPattern location="21:2-28:4">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="22:3-28:4" varName="btn">
+          <type xsi:type="ocl:OclModelElement" location="22:9-22:24" name="Button" model="/6"/>
+          <bindings location="23:4-23:24" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="23:12-23:24" name="name">
+              <source xsi:type="ocl:VariableExp" location="23:12-23:19" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="24:4-24:50" propertyName="direction">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="24:17-24:50" name="value">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="24:17-24:44" name="direction">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="24:17-24:34" name="direction">
+                  <source xsi:type="ocl:VariableExp" location="24:17-24:24" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="25:4-25:32" propertyName="image">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="25:13-25:32" name="value">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="25:13-25:26" name="image">
+                <source xsi:type="ocl:VariableExp" location="25:13-25:20" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="26:4-26:47" propertyName="positionX">
+            <value xsi:type="ocl:OperationCallExp" location="26:17-26:47" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="26:17-26:36" name="x">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="26:17-26:34" name="cordinate">
+                  <source xsi:type="ocl:VariableExp" location="26:17-26:24" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+          <bindings location="27:4-27:47" propertyName="positionY">
+            <value xsi:type="ocl:OperationCallExp" location="27:17-27:47" operationName="toString">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="27:17-27:36" name="y">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="27:17-27:34" name="cordinate">
+                  <source xsi:type="ocl:VariableExp" location="27:17-27:24" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+                </source>
+              </source>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="19:2-20:27">
+        <elements xsi:type="atl:SimpleInPatternElement" location="20:3-20:27" varName="control" variableExp="/0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.2/@value/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.3/@value/@source/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.4/@value/@source/@source/@source">
+          <type xsi:type="ocl:OclModelElement" location="20:13-20:27" name="Control" model="/5"/>
+        </elements>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="5:14-5:22" name="Controls" model="/0/@outModels.0"/>
+  <ocl:OclModel location="5:33-5:39" name="Phydsl" model="/0/@inModels.0"/>
+  <ocl:OclModel location="10:11-10:17" name="Phydsl" elements="/0/@elements.0/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="12:14-12:22" name="Controls" elements="/0/@elements.0/@outPattern/@elements.0/@type"/>
+  <ocl:OclModel location="20:13-20:19" name="Phydsl" elements="/0/@elements.1/@inPattern/@elements.0/@type"/>
+  <ocl:OclModel location="22:9-22:17" name="Controls" elements="/0/@elements.1/@outPattern/@elements.0/@type"/>
+</xmi:XMI>
